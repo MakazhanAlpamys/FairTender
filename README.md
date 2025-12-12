@@ -1,170 +1,170 @@
-# Система анализа подозрительных государственных закупок
+# Suspicious Government Procurement Analysis System
 
-## Описание проекта
+## Project Description
 
-Данная система представляет собой интерпретируемую модель машинного обучения, предназначенную для выявления подозрительных государственных закупок на основе различных характеристик сделок и поставщиков. Проект включает как скрипты для обучения модели, так и веб-приложение на Streamlit для удобного анализа закупок через пользовательский интерфейс.
+This system is an interpretable machine learning model designed to detect suspicious government procurements based on various transaction and supplier characteristics. The project includes both model training scripts and a Streamlit web application for convenient procurement analysis through a user interface.
 
-## Требования к системе
+## System Requirements
 
-### Версии Python:
-- **Рекомендуемая версия:** Python 3.8-3.10
-- **Не поддерживается:** Python 3.11+ (из-за несовместимости с некоторыми зависимостями)
+### Python Versions:
+- **Recommended version:** Python 3.8-3.10
+- **Not supported:** Python 3.11+ (due to incompatibility with some dependencies)
 
-### Операционные системы:
+### Operating Systems:
 - Windows
 - Linux
 - macOS
 
-## Возможности системы
+## System Features
 
-- **Базовая модель:** Обучение и сохранение модели для определения подозрительных закупок
-- **Веб-интерфейс:** Пользовательский интерфейс на базе Streamlit
-- **Массовый анализ:** Загрузка CSV файла с данными о закупках для массового анализа
-- **Проверка вручную:** Проверка отдельной закупки путем ввода ее параметров с мгновенным результатом
-- **Визуализации:** Графики, показывающие важность признаков, метрики модели и распределение результатов
-- **Средняя статистика:** Сравнение средних показателей подозрительных и обычных закупок
-- **Интерактивная карта регионов:** Визуализация распределения подозрительных закупок по регионам Казахстана с возможностью анализа различных метрик
+- **Base Model:** Training and saving a model for detecting suspicious procurements
+- **Web Interface:** User interface based on Streamlit
+- **Bulk Analysis:** Upload CSV files with procurement data for mass analysis
+- **Manual Check:** Check individual procurements by entering parameters with instant results
+- **Visualizations:** Charts showing feature importance, model metrics, and result distribution
+- **Average Statistics:** Comparison of average indicators for suspicious and normal procurements
+- **Interactive Regional Map:** Visualization of suspicious procurement distribution across Kazakhstan regions with the ability to analyze various metrics
 
-## Структура проекта
+## Project Structure
 
-- `suspicious_purchases_model.py` - основной скрипт модели
-- `app_streamlit.py` - веб-приложение на Streamlit
-- `analyze_results.py` - скрипт для анализа результатов модели
-- `final_training_data.csv` - обучающий набор данных
-- `final_test_data_user_input.csv` - тестовый набор данных для предсказаний
-- `predictions.csv` - файл с результатами предсказаний
-- `model.pkl` - сохраненная модель
-- `encoders.pkl` - сохраненные кодировщики для категориальных переменных
-- `confusion_matrix.png` - визуализация матрицы ошибок модели
-- `feature_importance.png` - визуализация важности признаков по XGBoost
-- `shap_importance.png` - визуализация SHAP важности признаков
-- `shap_summary.png` - визуализация SHAP распределения влияния признаков
-- `probability_distribution.png` - визуализация распределения вероятностей предсказаний
-- `requirements.txt` - файл с зависимостями проекта
-- `uploads/` - директория для загруженных пользовательских файлов
-- `static/` - директория для статических ресурсов (логотип и т.д.)
+- `suspicious_purchases_model.py` - main model script
+- `app_streamlit.py` - Streamlit web application
+- `analyze_results.py` - script for analyzing model results
+- `final_training_data.csv` - training dataset
+- `final_test_data_user_input.csv` - test dataset for predictions
+- `predictions.csv` - file with prediction results
+- `model.pkl` - saved model
+- `encoders.pkl` - saved encoders for categorical variables
+- `confusion_matrix.png` - visualization of model confusion matrix
+- `feature_importance.png` - visualization of feature importance by XGBoost
+- `shap_importance.png` - visualization of SHAP feature importance
+- `shap_summary.png` - visualization of SHAP feature influence distribution
+- `probability_distribution.png` - visualization of prediction probability distribution
+- `requirements.txt` - project dependencies file
+- `uploads/` - directory for user-uploaded files
+- `static/` - directory for static resources (logo, etc.)
 
-## Используемые признаки
+## Features Used
 
-1. **Характеристики закупки:**
-   - `category` - категория закупки
-   - `region` - регион проведения закупки
-   - `price` - общая стоимость контракта
-   - `avg_price_category_region` - средняя стоимость контрактов в данной категории и регионе
-   - `price_per_unit` - цена за единицу товара/услуги
-   - `days_to_tender` - количество дней до тендера
+1. **Procurement Characteristics:**
+   - `category` - procurement category
+   - `region` - procurement region
+   - `price` - total contract value
+   - `avg_price_category_region` - average contract value in the category and region
+   - `price_per_unit` - price per unit of goods/services
+   - `days_to_tender` - number of days until tender
 
-2. **Характеристики поставщика:**
-   - `supplier_id` - идентификатор поставщика
-   - `supplier_name` - название поставщика
-   - `supplier_win_count` - количество выигранных контрактов поставщиком
-   - `supplier_years_active` - количество лет активности поставщика
-   - `supplier_total_contracts` - общее количество контрактов поставщика
-   - `supplier_avg_contract_value` - средняя стоимость контрактов поставщика
+2. **Supplier Characteristics:**
+   - `supplier_id` - supplier identifier
+   - `supplier_name` - supplier name
+   - `supplier_win_count` - number of contracts won by supplier
+   - `supplier_years_active` - number of years supplier has been active
+   - `supplier_total_contracts` - total number of supplier contracts
+   - `supplier_avg_contract_value` - average value of supplier contracts
 
-## Целевая переменная
+## Target Variable
 
-- `is_suspicious` - показатель подозрительности закупки (1 - подозрительная, 0 - не подозрительная)
+- `is_suspicious` - indicator of procurement suspiciousness (1 - suspicious, 0 - not suspicious)
 
-## Используемые технологии
+## Technologies Used
 
-- **Streamlit:** Фреймворк для создания веб-приложений для машинного обучения и анализа данных
-- **XGBoost:** Алгоритм машинного обучения для классификации
-- **SHAP:** Библиотека для объяснения предсказаний моделей машинного обучения
-- **Pandas, NumPy:** Библиотеки для обработки данных
-- **Matplotlib, Seaborn:** Библиотеки для визуализации данных
-- **Scikit-learn:** Библиотека для машинного обучения
+- **Streamlit:** Framework for creating web applications for machine learning and data analysis
+- **XGBoost:** Machine learning algorithm for classification
+- **SHAP:** Library for explaining machine learning model predictions
+- **Pandas, NumPy:** Libraries for data processing
+- **Matplotlib, Seaborn:** Libraries for data visualization
+- **Scikit-learn:** Machine learning library
 
-## Возможности веб-интерфейса
+## Web Interface Features
 
-### 1. Главная страница
-Предоставляет общую информацию о проекте, демонстрирует метрики модели и описывает используемые признаки.
+### 1. Home Page
+Provides general project information, displays model metrics, and describes features used.
 
-### 2. Загрузка файла
-Возможность загрузить CSV файл для массового анализа закупок. Отображает статистику, выявленные подозрительные закупки и распределение вероятностей.
+### 2. File Upload
+Upload CSV files for bulk procurement analysis. Displays statistics, identified suspicious procurements, and probability distribution.
 
-### 3. Проверка вручную
-Интерфейс для ввода параметров отдельной закупки с мгновенным результатом анализа и объяснением предсказания с помощью SHAP.
+### 3. Manual Check
+Interface for entering individual procurement parameters with instant analysis results and prediction explanation using SHAP.
 
-### 4. Визуализации
-Различные графики и метрики для оценки работы модели:
-- Метрики качества модели
-- Важность признаков (SHAP)
-- Распределение вероятностей предсказаний
+### 4. Visualizations
+Various charts and metrics to evaluate model performance:
+- Model quality metrics
+- Feature importance (SHAP)
+- Prediction probability distribution
 
-### 5. Карта регионов
-Интерактивная карта Казахстана с визуализацией подозрительных закупок по регионам:
-- Отображение различных метрик (количество, процент, сумма подозрительных закупок)
-- Тепловая карта подозрительности
-- Таблица с подробными данными по регионам
-- Сравнительные графики регионов
+### 5. Regional Map
+Interactive map of Kazakhstan visualizing suspicious procurements by region:
+- Display of various metrics (count, percentage, sum of suspicious procurements)
+- Suspiciousness heat map
+- Table with detailed regional data
+- Comparative regional charts
 
-## Установка и запуск
+## Installation and Setup
 
-### 1. Установка Python 3.10 (рекомендуется)
+### 1. Install Python 3.10 (recommended)
 
-Скачайте и установите Python 3.10 с [официального сайта](https://www.python.org/downloads/release/python-3108/).
+Download and install Python 3.10 from the [official website](https://www.python.org/downloads/release/python-3108/).
 
-Для Windows:
-- Выберите "Windows installer (64-bit)"
-- При установке отметьте галочку "Add Python to PATH"
+For Windows:
+- Select "Windows installer (64-bit)"
+- Check "Add Python to PATH" during installation
 
-### 2. Создание виртуального окружения
+### 2. Create a Virtual Environment
 
-#### Для Windows:
+#### For Windows:
 
 ```bash
-# Проверить доступные версии Python:
+# Check available Python versions:
 py -0
 
-# Создать виртуальное окружение с Python 3.10:
+# Create virtual environment with Python 3.10:
 py -3.10 -m venv venv_py310
 
-# Активировать виртуальное окружение:
+# Activate virtual environment:
 venv_py310\Scripts\activate
 ```
 
-#### Для Linux/macOS:
+#### For Linux/macOS:
 
 ```bash
-# Создать виртуальное окружение:
+# Create virtual environment:
 python3.10 -m venv venv_py310
 
-# Активировать виртуальное окружение:
+# Activate virtual environment:
 source venv_py310/bin/activate
 ```
 
-### 3. Установка зависимостей
+### 3. Install Dependencies
 
 ```bash
-# Установить все необходимые зависимости:
+# Install all required dependencies:
 pip install -r requirements.txt
 ```
 
-### 4. Запуск проекта
+### 4. Run the Project
 
-#### Запуск веб-приложения Streamlit:
+#### Run Streamlit Web Application:
 
 ```bash
 streamlit run app_streamlit.py
 ```
-После запуска веб-приложения откройте веб-браузер и перейдите по адресу: http://localhost:8501
+After launching the web application, open your web browser and navigate to: http://localhost:8501
 
-#### Запуск базовой модели для обучения:
+#### Run Base Model for Training:
 
 ```bash
 python suspicious_purchases_model.py
 ```
 
-#### Запуск анализа результатов:
+#### Run Results Analysis:
 
 ```bash
 python analyze_results.py
 ```
 
-### Альтернативная установка для Python 3.11+ 
+### Alternative Installation for Python 3.11+
 
-Если у вас установлен Python 3.11 или новее, вы можете обновить файл requirements.txt со следующими версиями (однако работа всех функций не гарантирована):
+If you have Python 3.11 or newer installed, you can update the requirements.txt file with the following versions (however, full functionality is not guaranteed):
 
 ```
 streamlit==1.28.0
@@ -181,48 +181,48 @@ joblib==1.3.2
 scipy==1.11.3
 ```
 
-## Метрики модели
+## Model Metrics
 
-- **Точность (accuracy):** 96.1%
-- **Точность (precision):** 98.5%
-- **Полнота (recall):** 77.4%
-- **F1-мера:** 86.7%
+- **Accuracy:** 96.1%
+- **Precision:** 98.5%
+- **Recall:** 77.4%
+- **F1-score:** 86.7%
 
-## Формат входных данных
+## Input Data Format
 
-Система принимает CSV файлы со следующими колонками:
-- `category`: Категория закупки
-- `region`: Регион проведения закупки
-- `price`: Стоимость контракта
-- `avg_price_category_region`: Средняя стоимость по категории и региону
-- `supplier_id`: Идентификатор поставщика
-- `supplier_name`: Название компании поставщика
-- `supplier_win_count`: Количество выигранных контрактов
-- `days_to_tender`: Дни до тендера
-- `price_per_unit`: Цена за единицу
-- `supplier_years_active`: Годы активности поставщика
-- `supplier_total_contracts`: Общее количество контрактов
-- `supplier_avg_contract_value`: Средняя стоимость контрактов
+The system accepts CSV files with the following columns:
+- `category`: Procurement category
+- `region`: Procurement region
+- `price`: Contract value
+- `avg_price_category_region`: Average value by category and region
+- `supplier_id`: Supplier identifier
+- `supplier_name`: Supplier company name
+- `supplier_win_count`: Number of contracts won
+- `days_to_tender`: Days until tender
+- `price_per_unit`: Price per unit
+- `supplier_years_active`: Supplier years of activity
+- `supplier_total_contracts`: Total number of contracts
+- `supplier_avg_contract_value`: Average contract value
 
-## Результаты и интерпретация
+## Results and Interpretation
 
-После запуска модели будут созданы:
-- Файл `predictions.csv` с предсказаниями на тестовом наборе данных
-- Визуализации для анализа работы модели
+After running the model, the following will be created:
+- `predictions.csv` file with predictions on the test dataset
+- Visualizations for analyzing model performance
 
-Модель использует XGBoost с SHAP (SHapley Additive exPlanations) для обеспечения интерпретируемости результатов. SHAP позволяет понять, какие признаки наиболее важны для принятия решения о подозрительности закупки и как конкретные значения признаков влияют на предсказания модели.
+The model uses XGBoost with SHAP (SHapley Additive exPlanations) to ensure interpretability of results. SHAP allows understanding which features are most important for deciding procurement suspiciousness and how specific feature values influence model predictions.
 
-## Решение проблем
+## Troubleshooting
 
-### Проблемы с установкой зависимостей:
-- Если у вас Python 3.11+, следуйте инструкциям для альтернативной установки
-- При возникновении ошибок с SHAP или XGBoost, убедитесь, что используете Python 3.10 или ниже
-- Проблемы с NumPy часто возникают из-за несовместимости версий Python
+### Dependency Installation Issues:
+- If you have Python 3.11+, follow the alternative installation instructions
+- If errors occur with SHAP or XGBoost, ensure you're using Python 3.10 or lower
+- NumPy issues often arise from Python version incompatibility
 
-### Проблемы запуска Streamlit:
-- Убедитесь, что все зависимости установлены правильно
-- Проверьте, что активировано правильное виртуальное окружение
+### Streamlit Launch Issues:
+- Ensure all dependencies are installed correctly
+- Verify the correct virtual environment is activated
 
-## Примечания
+## Notes
 
-Проект разработан для Python 3.8-3.10 и использует совместимые версии всех библиотек. При возникновении проблем с установкой или запуском, рекомендуется создать новое виртуальное окружение с Python 3.10. 
+The project is developed for Python 3.8-3.10 and uses compatible versions of all libraries. If installation or launch issues occur, it's recommended to create a new virtual environment with Python 3.10.
